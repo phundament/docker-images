@@ -3,6 +3,7 @@ before_script:
   - export REGISTRY_EMAIL=reg@h17n.de
   - export REGISTRY_HOST=https://index.docker.io/v1/
   - export CI_APP_VOLUME=/srv/gitlab-runner/$CI_PROJECT_DIR
+  - echo $CI_PROJECT_DIR
 
 build-php5:
   stage: build
@@ -44,13 +45,7 @@ test-dev:
 deploy:
   stage: deploy
   script:
-    - docker login --username $REGISTRY_USER --password $REGISTRY_PASS --email $REGISTRY_EMAIL $REGISTRY_HOST
-    - docker push phundament/php-one:5.6-apache
-    - docker push phundament/nginx-one:1.9
-    - docker push phundament/php-one:5.6-fpm
-    - docker push phundament/php-one:7.0-fpm
-    - docker tag -f phundament/php-one:5.6-fpm phundament/php-one:5.6
-    - docker push phundament/php-one:5.6
+    - build/deploy.sh
   only:
     - master
 

@@ -5,6 +5,10 @@ Phundament Docker images
 
 This repository contains the `Dockerfile`s for building *PHP* and *nginx* Docker images.
 
+Setup
+-----
+
+You need to set the environment variable `GITHUB_TOKEN` to a valid token, to download ZIP-files during build.
 
 Docker Hub
 ----------
