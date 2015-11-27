@@ -1,0 +1,109 @@
+# Phundament 5 PHP Docker image
+# =============================
+
+FROM php:5.6-fpm
+
+# Working directory for initialization
+WORKDIR /root
+
+# Install system packages for PHP extensions recommended for Phundament 5
+RUN curl -sL https://deb.nodesource.com/setup | bash - && \
+    apt-get update && \
+    apt-get -y install \
+            g++ \
+            git \
+            libicu-dev \
+            libmcrypt-dev \
+            libfreetype6-dev \
+            libjpeg-dev \
+            libjpeg62-turbo-dev \
+            libmcrypt-dev \
+            libpng12-dev \
+            zlib1g-dev \
+            mysql-client \
+            openssh-client \
+            libxml2-dev \
+            nano \
+            yui-compressor \
+            linkchecker \
+            nodejs \
+        --no-install-recommends && \
+        apt-get clean && \
+        rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+
+# Install PHP extensions required for Yii 2.0 Framework
+RUN docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/ --with-png-dir=/usr/include/
+RUN docker-php-ext-install gd
+RUN docker-php-ext-configure bcmath && \
+    docker-php-ext-install intl \
+                           pdo_mysql \
+                           mbstring \
+                           mcrypt \
+                           zip \
+                           bcmath \
+                           soap
+
+# Install APC
+RUN pecl install apcu-stable xdebug && \
+    echo extension=apcu.so > /usr/local/etc/php/conf.d/apcu.ini && \
+    echo "zend_extension=xdebug.so" >> /usr/local/etc/php/conf.d/xdebug.ini && \
+    echo "xdebug.remote_enable=0" >> /usr/local/etc/php/conf.d/xdebug.ini && \
+    echo "xdebug.remote_autostart=0" >> /usr/local/etc/php/conf.d/xdebug.ini && \
+    echo "xdebug.remote_connect_back=1" >> /usr/local/etc/php/conf.d/xdebug.ini && \
+    echo "xdebug.remote_port=9000" >> /usr/local/etc/php/conf.d/xdebug.ini && \
+    echo "xdebug.idekey=PHPStorm" >> /usr/local/etc/php/conf.d/xdebug.ini && \
+    echo "xdebug.extended_info=1" >> /usr/local/etc/php/conf.d/xdebug.ini
+
+# Install less-compiler
+RUN npm install -g less
+
+# Install closure-compiler
+RUN curl -o /root/compiler.tar.gz http://dl.google.com/closure-compiler/compiler-20150126.tar.gz && \
+    tar -xzf /root/compiler.tar.gz && \
+    rm /root/compiler.tar.gz
+
+
+# Include composer and application binaries in PATH
+ENV PATH /app:/app/vendor/bin:/root/.composer/vendor/bin:$PATH
+
+# Install composer
+RUN curl -sS https://getcomposer.org/installer | php -- --version=1.0.0-alpha11 && \
+    mv composer.phar /usr/local/bin/composer && \
+    composer global require "fxp/composer-asset-plugin:1.*" && \
+    composer global dumpautoload --optimize
+
+# Install packages required for Yii 2.0 Framework codeception testing globally
+RUN composer global require  --prefer-dist \
+        "codeception/codeception:2.0.*" "codeception/specify:*" "codeception/verify:*" && \
+    composer global dumpautoload --optimize
+    
+
+# Add PHP-FPM + nginx configuration
+ADD container-files/pool.d/* /usr/local/etc/php/pool.d/
+ADD container-files/php-fpm.conf /usr/local/etc/php-fpm.conf
+
+# PHP configuration
+ADD container-files/conf.d/* /usr/local/etc/php/conf.d/
+
+
+# Setup application environment
+WORKDIR /app
+
+# Install application template and core extensions to `phundament-src` directory for caching and installation by copying files.
+ADD container-files/config.json /root/.composer/config.json
+RUN rm -rf /phundament-src && \
+    composer create-project --prefer-dist \
+        phundament/app:4.0.0-rc7 \
+        /phundament-src && \
+    composer dumpautoload -d /phundament-src --optimize # 02.10.2015
+
+# Prepare folders for Yii 2.0 Framework (www-data)
+RUN mkdir -p /app/runtime /app/web/assets && \
+    chown -R 1000:33 /app/runtime /app/web/assets
+
+# Startup script for FPM
+ADD container-files/run.sh /root/run.sh
+CMD ["/root/run.sh"]
+
+EXPOSE 9000
+
