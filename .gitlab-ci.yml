@@ -44,7 +44,7 @@ test-dev:
 deploy:
   stage: deploy
   script:
-    - build/deploy.sh
+    - sh build/deploy.sh
   only:
     - master
 
