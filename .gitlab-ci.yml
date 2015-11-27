@@ -45,8 +45,8 @@ deploy:
   stage: deploy
   script:
     - sh build/deploy.sh
-  only:
-    - master
+  except:
+    - develop
 
 
 
@@ -63,6 +63,6 @@ rspec-legacy:
 deploy-legacy:
   script:
     - sh tests-4.0/release.sh
-  only:
-    - master
+  except:
+    - develop
   stage: deploy
