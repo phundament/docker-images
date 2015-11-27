@@ -56,13 +56,17 @@ deploy:
 
 
 
-rspec-4-0:
+build-legacy:
   script:
      - sed -i "s|0000000000000000000000000000000000000000|${GITHUB_TOKEN}|" phundament/php/cli-dev/config.json
      - touch -acmt 1010101011 phundament/php/cli-dev/config.json
+     - make -f Makefile-schmunk42 build
+  stage: build
+rspec-legacy:
+  script:
      - sh tests-4.0/run.sh
   stage: test
-deploy-4-0:
+deploy-legacy:
   script:
     - sh tests-4.0/release.sh
   only:
