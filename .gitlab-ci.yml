@@ -44,13 +44,7 @@ test-dev:
 deploy:
   stage: deploy
   script:
-    - docker login --username $REGISTRY_USER --password $REGISTRY_PASS --email $REGISTRY_EMAIL $REGISTRY_HOST
-    - docker push phundament/php-one:5.6-apache
-    - docker push phundament/nginx-one:1.9
-    - docker push phundament/php-one:5.6-fpm
-    - docker push phundament/php-one:7.0-fpm
-    - docker tag -f phundament/php-one:5.6-fpm phundament/php-one:5.6
-    - docker push phundament/php-one:5.6
+    - build/deploy.sh
   only:
     - master
 
