@@ -8,6 +8,6 @@ set -v
   
 export COMPOSE_HTTP_TIMEOUT=120
 
-make -f Makefile-schmunk42 test  
+make -f Makefile test
 
 exit 0
