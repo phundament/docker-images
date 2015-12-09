@@ -1,4 +1,10 @@
-version := 4.5.1
+version := $(shell git describe)
+
+default: help
+
+help:
+	# tbd
+	echo "."
 
 schmunk42: build
 

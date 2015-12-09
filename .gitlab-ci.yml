@@ -54,7 +54,7 @@ build-legacy:
   script:
      - sed -i "s|0000000000000000000000000000000000000000|${GITHUB_TOKEN}|" phundament/php/cli-dev/config.json
      - touch -acmt 1010101011 phundament/php/cli-dev/config.json
-     - make -f Makefile-schmunk42 build
+     - make -f Makefile build
   stage: build
 
 rspec-legacy:

@@ -35,14 +35,14 @@ RUN curl -o /root/compiler.tar.gz http://dl.google.com/closure-compiler/compiler
 
 # Install packages required for Yii 2.0 Framework codeception testing globally
 RUN composer global require  --prefer-dist \
-        "codeception/codeception:2.0.*" "codeception/specify:*" "codeception/verify:*" && \
+        "codeception/codeception:^2.1.4" "codeception/specify:*" "codeception/verify:*" && \
     composer global dumpautoload --optimize
 
 # Install application template and core extensions to `phundament-src` directory for caching and installation by copying files.
 ADD config.json /root/.composer/config.json
 RUN rm -rf /phundament-src && \
     composer create-project --prefer-dist \
-        phundament/app:4.0.0-rc7 \
+        phundament/app:4.0.0-rc8 \
         /phundament-src && \
     composer dumpautoload -d /phundament-src --optimize # 02.10.2015
 
