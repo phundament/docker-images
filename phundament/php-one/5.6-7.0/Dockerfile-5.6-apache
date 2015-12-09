@@ -43,7 +43,7 @@ RUN docker-php-ext-configure gd --with-freetype-dir=/usr/include/ && \
                            soap
 
 # Install APC
-RUN printf "\n" | pecl install apcu-4.0.10 xdebug-2.4.0rc2 && \
+RUN printf "\n" | pecl install apcu-4.0.10 xdebug-2.4.0RC2 && \
     echo extension=apcu.so > /usr/local/etc/php/conf.d/apcu.ini && \
     echo "zend_extension=xdebug.so" >> /usr/local/etc/php/conf.d/xdebug.ini && \
     echo "xdebug.remote_enable=0" >> /usr/local/etc/php/conf.d/xdebug.ini && \
