@@ -12,5 +12,11 @@ if (!function_exists('imagecreatefromjpeg')) {
     exit(1);
 }
 
+if (!function_exists('apc_add')) {
+    echo "Error: apc_add not found!\n";
+    exit(1);
+}
+
+
 echo "\nDone.\n";
 exit(0);
