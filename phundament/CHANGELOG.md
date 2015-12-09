@@ -1,6 +1,11 @@
 Docker images `phundament/php`
 ==============================
 
+4.6.0
+-----
+
+- [NEW] nginx elk logging
+
 4.4.0
 -----
 
