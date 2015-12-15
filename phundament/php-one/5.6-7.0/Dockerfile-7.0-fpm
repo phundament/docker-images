@@ -79,18 +79,18 @@ RUN composer global require  --prefer-dist \
     
 
 # Add PHP-FPM + nginx configuration
-ADD container-files/pool.d/* /usr/local/etc/php/pool.d/
-ADD container-files/php-fpm.conf /usr/local/etc/php-fpm.conf
+COPY container-files/pool.d/* /usr/local/etc/php/pool.d/
+COPY container-files/php-fpm.conf /usr/local/etc/php-fpm.conf
 
 # PHP configuration
-ADD container-files/conf.d/* /usr/local/etc/php/conf.d/
+COPY container-files/conf.d/* /usr/local/etc/php/conf.d/
 
 
 # Setup application environment
 WORKDIR /app
 
 # Install application template and core extensions to `phundament-src` directory for caching and installation by copying files.
-ADD container-files/config.json /root/.composer/config.json
+COPY container-files/config.json /root/.composer/config.json
 RUN rm -rf /phundament-src && \
     composer create-project --prefer-dist \
         phundament/app:4.0.0-rc8 \
@@ -102,7 +102,7 @@ RUN mkdir -p /app/runtime /app/web/assets && \
     chown -R 1000:33 /app/runtime /app/web/assets
 
 # Startup script for FPM
-ADD container-files/run.sh /root/run.sh
+COPY container-files/run.sh /root/run.sh
 CMD ["/root/run.sh"]
 
 EXPOSE 9000
