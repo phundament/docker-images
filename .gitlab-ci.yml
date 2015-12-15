@@ -40,6 +40,11 @@ test-dev:
     - docker run --rm -v $CI_APP_VOLUME/tests:/tests phundament/php-one:5.6-apache php -e /tests/test_functions.php
     - docker run --rm -v $CI_APP_VOLUME/tests:/tests phundament/php-one:7.0-fpm php -e /tests/test_functions.php
 
+lint:
+  stage: test
+  allow_failure: true
+  script:
+    - make x-lint
 
 deploy:
   stage: deploy
@@ -47,8 +52,6 @@ deploy:
     - sh build/deploy.sh
   except:
     - develop
-
-
 
 build-legacy:
   script:

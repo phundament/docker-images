@@ -78,3 +78,10 @@ test-stack-php-nginx:
 	    docker-compose ps && \
 	    docker-compose run cli env && \
 	    docker-compose stop
+
+x-lint: export DOCKERFILE_PATH=phundament/php-one/5.6-7.0
+x-lint: export DOCKERFILE=Dockerfile-5.6-fpm
+x-lint:
+	docker run -it --rm -v "$(PWD)/$(DOCKERFILE_PATH)/$(DOCKERFILE)":/Dockerfile:ro redcoolbeans/dockerlint
+	docker run -it --rm --privileged -v $(PWD)/$(DOCKERFILE_PATH):/root/ projectatomic/dockerfile-lint dockerfile_lint -f $(DOCKERFILE)
+
