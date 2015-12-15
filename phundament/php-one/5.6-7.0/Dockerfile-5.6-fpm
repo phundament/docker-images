@@ -70,7 +70,7 @@ ENV PATH /app:/app/vendor/bin:/root/.composer/vendor/bin:$PATH
 RUN curl -sS https://getcomposer.org/installer | php -- --version=1.0.0-alpha11 && \
     mv composer.phar /usr/local/bin/composer && \
     composer global require "fxp/composer-asset-plugin:1.*" && \
-    composer global dumpautoload --optimize
+    composer global dumpautoload --optimize # 15.12.2015
 
 # Install packages required for Yii 2.0 Framework codeception testing globally
 RUN composer global require  --prefer-dist \

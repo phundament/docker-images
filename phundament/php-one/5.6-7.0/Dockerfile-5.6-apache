@@ -15,6 +15,7 @@ RUN curl -sL https://deb.nodesource.com/setup | bash - && \
             libicu-dev \
             libmcrypt-dev \
             libfreetype6-dev \
+            libjpeg-dev \
             libjpeg62-turbo-dev \
             libmcrypt-dev \
             libpng12-dev \
@@ -31,9 +32,9 @@ RUN curl -sL https://deb.nodesource.com/setup | bash - && \
         rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 # Install PHP extensions required for Yii 2.0 Framework
-RUN docker-php-ext-configure gd --with-freetype-dir=/usr/include/ && \
-    docker-php-ext-install gd && \
-    docker-php-ext-configure bcmath && \
+RUN docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/ --with-png-dir=/usr/include/
+RUN docker-php-ext-install gd
+RUN docker-php-ext-configure bcmath && \
     docker-php-ext-install intl \
                            pdo_mysql \
                            mbstring \
@@ -42,7 +43,7 @@ RUN docker-php-ext-configure gd --with-freetype-dir=/usr/include/ && \
                            bcmath \
                            soap
 
-# Install APC
+# Install APC (`printf`, see http://stackoverflow.com/a/8154466/291573)
 RUN printf "\n" | pecl install apcu-4.0.10 xdebug-2.4.0RC2 && \
     echo extension=apcu.so > /usr/local/etc/php/conf.d/apcu.ini && \
     echo "zend_extension=xdebug.so" >> /usr/local/etc/php/conf.d/xdebug.ini && \
@@ -69,7 +70,7 @@ ENV PATH /app:/app/vendor/bin:/root/.composer/vendor/bin:$PATH
 RUN curl -sS https://getcomposer.org/installer | php -- --version=1.0.0-alpha11 && \
     mv composer.phar /usr/local/bin/composer && \
     composer global require "fxp/composer-asset-plugin:1.*" && \
-    composer global dumpautoload --optimize # 20.11.2015
+    composer global dumpautoload --optimize # 15.12.2015
 
 # Install packages required for Yii 2.0 Framework codeception testing globally
 RUN composer global require  --prefer-dist \
