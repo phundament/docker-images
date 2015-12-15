@@ -16,13 +16,13 @@ else
 fi;
 
 if [ $STABLE_VERSION = 1 ]; then
-    docker tag phundament/php-one:5.6-apache phundament/php-one:5.6-apache-${CURRENT_VERSION}
     docker tag phundament/nginx-one:1.9 phundament/nginx-one:1.9-${CURRENT_VERSION}
+    docker tag phundament/php-one:5.6-apache phundament/php-one:5.6-apache-${CURRENT_VERSION}
     docker tag phundament/php-one:5.6-fpm phundament/php-one:5.6-fpm-${CURRENT_VERSION}
     docker tag phundament/php-one:7.0-fpm phundament/php-one:7.0-fpm-${CURRENT_VERSION}
 
-    docker push phundament/php-one:5.6-apache-${CURRENT_VERSION}
     docker push phundament/nginx-one:1.9-${CURRENT_VERSION}
+    docker push phundament/php-one:5.6-apache-${CURRENT_VERSION}
     docker push phundament/php-one:5.6-fpm-${CURRENT_VERSION}
     docker push phundament/php-one:7.0-fpm-${CURRENT_VERSION}
     docker push phundament/php-one:5.6-${CURRENT_VERSION}
@@ -30,8 +30,8 @@ fi;
 
 docker tag -f phundament/php-one:5.6-fpm phundament/php-one:5.6
 
-docker push phundament/php-one:5.6-apache
 docker push phundament/nginx-one:1.9
+docker push phundament/php-one:5.6-apache
 docker push phundament/php-one:5.6-fpm
 docker push phundament/php-one:7.0-fpm
 docker push phundament/php-one:5.6
