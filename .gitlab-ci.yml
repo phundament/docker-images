@@ -28,19 +28,19 @@ build-nginx:
     - cd phundament/nginx-one/1.9
     - docker build --pull -t phundament/nginx-one:1.9 -f Dockerfile .
 
-test:
+test-images:
   stage: test
   script:
-    - docker run --rm -v $CI_APP_VOLUME/tests:/tests phundament/php-one:5.6-fpm php -e /tests/test_functions.php
+    - docker run --rm -v $CI_APP_VOLUME/tests:/tests phundament/php-one:5.6-fpm php -e /tests/phundament/php-one/test_functions.php
 
-test-dev:
+test-images-allow-fail:
   stage: test
   allow_failure: true
   script:
-    - docker run --rm -v $CI_APP_VOLUME/tests:/tests phundament/php-one:5.6-apache php -e /tests/test_functions.php
-    - docker run --rm -v $CI_APP_VOLUME/tests:/tests phundament/php-one:7.0-fpm php -e /tests/test_functions.php
+    - docker run --rm -v $CI_APP_VOLUME/tests:/tests phundament/php-one:5.6-apache php -e /tests/phundament/php-one/test_functions.php
+    - docker run --rm -v $CI_APP_VOLUME/tests:/tests phundament/php-one:7.0-fpm php -e /tests/phundament/php-one/test_functions.php
 
-lint:
+lint-dockerfiles:
   stage: test
   allow_failure: true
   script:
@@ -60,14 +60,14 @@ build-legacy:
      - make -f Makefile build
   stage: build
 
-rspec-legacy:
+test-legacy:
   script:
-     - sh tests-4.0/run.sh
+     - sh tests/phundament/php/run.sh
   stage: test
 
 deploy-legacy:
   script:
-    - sh tests-4.0/release.sh
+    - sh tests/phundament/php/release.sh
   except:
     - develop
   stage: deploy

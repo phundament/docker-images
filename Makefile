@@ -63,7 +63,7 @@ push:
 test: test-stack-php-nginx-vanilla-mount test-stack-php-nginx
 
 test-stack-php-nginx-vanilla-mount:
-	cd tests-4.0/php-nginx-vanilla && \
+	cd tests/phundament/php/stack-php-nginx-vanilla && \
 	    docker-compose build && \
 	    docker-compose up -d && \
 	    docker-compose ps && \
@@ -71,7 +71,7 @@ test-stack-php-nginx-vanilla-mount:
 	    docker-compose stop
 
 test-stack-php-nginx:
-	cd tests-4.0/php-nginx && \
+	cd tests/phundament/php/stack-php-nginx && \
 		docker-compose build && \
 	    docker-compose run cli php -v && \
 	    docker-compose up -d && \
@@ -82,6 +82,6 @@ test-stack-php-nginx:
 x-lint: export DOCKERFILE_PATH=phundament/php-one/5.6-7.0
 x-lint: export DOCKERFILE=Dockerfile-5.6-fpm
 x-lint:
-	docker run -it --rm -v "$(PWD)/$(DOCKERFILE_PATH)/$(DOCKERFILE)":/Dockerfile:ro redcoolbeans/dockerlint
-	docker run -it --rm --privileged -v $(PWD)/$(DOCKERFILE_PATH):/root/ projectatomic/dockerfile-lint dockerfile_lint -f $(DOCKERFILE)
+	docker run --rm -v "$(PWD)/$(DOCKERFILE_PATH)/$(DOCKERFILE)":/Dockerfile:ro redcoolbeans/dockerlint
+	docker run --rm --privileged -v $(PWD)/$(DOCKERFILE_PATH):/root/ projectatomic/dockerfile-lint dockerfile_lint -f $(DOCKERFILE)
 
