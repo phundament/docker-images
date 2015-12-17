@@ -1,7 +1,7 @@
 Phundament Docker images
 ========================
 
-[![build status](https://git.hrzg.de/ci/projects/62/status.png?ref=master)](https://git.hrzg.de/ci/projects/62?ref=master)
+[![build status](https://git.hrzg.de/ci/projects/62/status.png?ref=master)](https://git.hrzg.de/phundament/docker-images/builds?scope=all)
 
 Ressources
 ----------
