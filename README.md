@@ -1,6 +1,11 @@
 Phundament Docker images
 ========================
 
+[![build status](https://git.hrzg.de/ci/projects/62/status.png?ref=master)](https://git.hrzg.de/ci/projects/62?ref=master)
+
+Ressources
+----------
+
 - [GitHub](https://github.com/phundament/docker-images)
 
 This repository contains the `Dockerfile`s for building *PHP* and *nginx* Docker images.
