@@ -43,6 +43,30 @@ Phundament application
 - https://hub.docker.com/r/phundament/app/ 
 
 
+Features
+--------
+
+### nginx
+
+- 512M client body size
+
+### PHP
+
+#### fpm and cli (one)
+
+ - basic nginx configuration
+ - installation of PHP-extensions for Yii 2.0 Framework
+   - gd
+   - intl
+   - pdo_mysql
+   - mbstring
+   - mcrypt
+   - zip
+   - apcu
+ - composer
+ - fxp/composer-asset-plugin
+
+
 Links
 -----
 
