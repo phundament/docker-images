@@ -3,6 +3,10 @@
 
 FROM php:7.0-fpm
 
+# Working directory for initialization
+WORKDIR /root
+
+
 # Install system packages for PHP extensions recommended for Phundament
 RUN curl -sL https://deb.nodesource.com/setup | bash - && \
     apt-get update && \
@@ -12,6 +16,7 @@ RUN curl -sL https://deb.nodesource.com/setup | bash - && \
             libicu-dev \
             libmcrypt-dev \
             libfreetype6-dev \
+            libjpeg-dev \
             libjpeg62-turbo-dev \
             libmcrypt-dev \
             libpng12-dev \
@@ -27,22 +32,10 @@ RUN curl -sL https://deb.nodesource.com/setup | bash - && \
         apt-get clean && \
         rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
-# Working directory for initialization
-WORKDIR /root
-
-# Install less-compiler
-RUN npm install -g less
-
-# Install closure-compiler
-RUN curl -o /root/compiler.tar.gz http://dl.google.com/closure-compiler/compiler-20150126.tar.gz && \
-    tar -xzf /root/compiler.tar.gz && \
-    rm /root/compiler.tar.gz
-
-
 # Install PHP extensions required for Yii 2.0 Framework
-RUN docker-php-ext-configure gd --with-freetype-dir=/usr/include/ && \
-    docker-php-ext-install gd && \
-    docker-php-ext-configure bcmath && \
+RUN docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/ --with-png-dir=/usr/include/
+RUN docker-php-ext-install gd
+RUN docker-php-ext-configure bcmath && \
     docker-php-ext-install intl \
                            pdo_mysql \
                            mbstring \
@@ -62,6 +55,14 @@ RUN printf "\n" | pecl install apcu-stable xdebug-2.4.0RC2 && \
     echo "xdebug.idekey=PHPStorm" >> /usr/local/etc/php/conf.d/xdebug.ini && \
     echo "xdebug.extended_info=1" >> /usr/local/etc/php/conf.d/xdebug.ini
 
+# Install less-compiler
+RUN npm install -g less
+
+# Install closure-compiler
+RUN curl -o /root/compiler.tar.gz http://dl.google.com/closure-compiler/compiler-20150126.tar.gz && \
+    tar -xzf /root/compiler.tar.gz && \
+    rm /root/compiler.tar.gz
+
 
 # Include composer and application binaries in PATH
 ENV PATH /app:/app/vendor/bin:/root/.composer/vendor/bin:$PATH
@@ -70,7 +71,7 @@ ENV PATH /app:/app/vendor/bin:/root/.composer/vendor/bin:$PATH
 RUN curl -sS https://getcomposer.org/installer | php -- --version=1.0.0-alpha11 && \
     mv composer.phar /usr/local/bin/composer && \
     composer global require "fxp/composer-asset-plugin:1.*" && \
-    composer global dumpautoload --optimize # 20.11.2015
+    composer global dumpautoload --optimize # 21.12.2015
 
 # Install packages required for Yii 2.0 Framework codeception testing globally
 RUN composer global require  --prefer-dist \
@@ -95,7 +96,7 @@ RUN rm -rf /phundament-src && \
     composer create-project --prefer-dist \
         phundament/app:4.0.0-rc8 \
         /phundament-src && \
-    composer dumpautoload -d /phundament-src --optimize
+    composer dumpautoload -d /phundament-src --optimize # 21.12.2015
 
 # Prepare folders for Yii 2.0 Framework (www-data)
 RUN mkdir -p /app/runtime /app/web/assets && \
