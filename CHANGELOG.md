@@ -1,6 +1,10 @@
 Docker images `phundament/php-one`
 ==================================
 
+### latest
+
+- [UPD] trigger PHP 7.0.1 build   
+
 ### 4.6.0
 
 - [UPD] disabled xdebug loading by default
