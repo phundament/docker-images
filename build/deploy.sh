@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+set -e
+
 docker login --username $REGISTRY_USER --password $REGISTRY_PASS --email $REGISTRY_EMAIL $REGISTRY_HOST
 
 # Create tagged image from git tag
