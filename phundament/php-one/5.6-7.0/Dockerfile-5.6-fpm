@@ -70,11 +70,11 @@ ENV PATH /app:/app/vendor/bin:/root/.composer/vendor/bin:$PATH
 RUN curl -sS https://getcomposer.org/installer | php -- --version=1.0.0-alpha11 && \
     mv composer.phar /usr/local/bin/composer && \
     composer global require "fxp/composer-asset-plugin:1.*" && \
-    composer global dumpautoload --optimize # 21.12.2015
+    composer global dumpautoload --optimize # 28.12.2015
 
 # Install packages required for Yii 2.0 Framework codeception testing globally
 RUN composer global require  --prefer-dist \
-        "codeception/codeception:^2.1.4" "codeception/specify:*" "codeception/verify:*" && \
+        "codeception/codeception:^2.1.5" "codeception/specify:*" "codeception/verify:*" && \
     composer global dumpautoload --optimize
 
 
@@ -93,9 +93,9 @@ WORKDIR /app
 COPY container-files/config.json /root/.composer/config.json
 RUN rm -rf /phundament-src && \
     composer create-project --prefer-dist \
-        phundament/app:4.0.0-rc8 \
+        phundament/app:4.0.0-rc13 \
         /phundament-src && \
-    composer dumpautoload -d /phundament-src --optimize # 21.12.2015
+    composer dumpautoload -d /phundament-src --optimize
 
 # Prepare folders for Yii 2.0 Framework (www-data)
 RUN mkdir -p /app/runtime /app/web/assets && \
