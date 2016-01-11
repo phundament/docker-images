@@ -29,7 +29,6 @@ if [ $STABLE_VERSION = 1 ]; then
     docker push phundament/php-one:5.6-apache-${CURRENT_VERSION}
     docker push phundament/php-one:5.6-fpm-${CURRENT_VERSION}
     docker push phundament/php-one:7.0-fpm-${CURRENT_VERSION}
-    docker push phundament/php-one:5.6-${CURRENT_VERSION}
 fi;
 
 docker tag -f phundament/php-one:5.6-fpm phundament/php-one:5.6
