@@ -3,7 +3,15 @@ Docker images `phundament/php-one`
 
 ### latest
 
-- [UPD] trigger PHP 7.0.1 build   
+ - added lesshint
+ - removed already exposed ports
+ 
+### 4.6.1
+
+ - trigger PHP 7.0.1 build   
+ - :arrow_up: package cache
+ - :arrow_up: codeception, :arrow_up: package cache
+ - do not ignore errors in deploy script
 
 ### 4.6.0
 

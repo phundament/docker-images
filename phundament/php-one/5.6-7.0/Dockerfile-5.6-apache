@@ -55,7 +55,7 @@ RUN printf "\n" | pecl install apcu-4.0.10 xdebug-2.4.0RC2 && \
     echo "xdebug.extended_info=1" >> /usr/local/etc/php/conf.d/xdebug.ini
 
 # Install less-compiler
-RUN npm install -g less
+RUN npm install -g less lesshint
 
 # Install closure-compiler
 RUN curl -o /root/compiler.tar.gz http://dl.google.com/closure-compiler/compiler-20150126.tar.gz && \
@@ -92,7 +92,7 @@ WORKDIR /app
 COPY container-files/config.json /root/.composer/config.json
 RUN rm -rf /phundament-src && \
     composer create-project --prefer-dist \
-        phundament/app:4.0.0 \
+        phundament/app:4.0.2 \
         /phundament-src && \
     composer dumpautoload -d /phundament-src --optimize
 
@@ -104,6 +104,3 @@ RUN rm -rf /var/www/html
 RUN ln -s /app/web /var/www/html
 
 RUN a2enmod rewrite headers cache deflate expires
-
-EXPOSE 80
-EXPOSE 443
