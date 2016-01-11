@@ -15,9 +15,11 @@ Docker images `phundament/php-one`
  
 ### 4.6.1
 
+> :warning: requires rebuilding of tester classes with `codecept build`
+
  - PHP 7.0.1
  - :arrow_up: package cache
- - :arrow_up: codeception, :arrow_up: package cache
+ - :arrow_up: codeception `^2.1.5`, :arrow_up: package cache
  - do not ignore errors in deploy script
 
 ### 4.6.0
