@@ -67,10 +67,11 @@ RUN curl -o /root/compiler.tar.gz http://dl.google.com/closure-compiler/compiler
 ENV PATH /app:/app/vendor/bin:/root/.composer/vendor/bin:$PATH
 
 # Install composer
-RUN curl -sS https://getcomposer.org/installer | php -- --version=1.0.0-alpha11 && \
+RUN curl -sS https://getcomposer.org/installer | php -- \
+        --version=$(curl -s https://api.github.com/repos/composer/composer/releases/latest | grep -oP '"tag_name": "\K[^"]+') && \
     mv composer.phar /usr/local/bin/composer && \
     composer global require "fxp/composer-asset-plugin:1.*" && \
-    composer global dumpautoload --optimize # 28.12.2015
+    composer global dumpautoload --optimize # 11.01.2016
 
 # Install packages required for Yii 2.0 Framework codeception testing globally
 RUN composer global require  --prefer-dist \

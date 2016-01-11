@@ -3,12 +3,19 @@ Docker images `phundament/php-one`
 
 ### latest
 
+ - use latest `composer` release via curl from GitHub API
+ - hardened build
+
+### 4.6.2
+
+ - PHP 5.6.17
+ - PHP 7.0.2
  - added lesshint
  - removed already exposed ports
  
 ### 4.6.1
 
- - trigger PHP 7.0.1 build   
+ - PHP 7.0.1
  - :arrow_up: package cache
  - :arrow_up: codeception, :arrow_up: package cache
  - do not ignore errors in deploy script
