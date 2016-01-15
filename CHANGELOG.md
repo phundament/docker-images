@@ -30,6 +30,8 @@ Docker images `phundament/php-one`
 
 > :warning: `4.6.0` requires rebuilding of tester classes with `codecept build`
 
+---
+
 Legacy images: `phundament/php`
 -------------------------------
 
