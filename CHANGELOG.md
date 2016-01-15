@@ -8,25 +8,25 @@ Docker images `phundament/php-one`
 
 ### 4.6.2
 
- - PHP 5.6.17
- - PHP 7.0.2
- - added lesshint
+ - :arrow_up: PHP 5.6.17
+ - :arrow_up: PHP 7.0.2
+ - :new: added lesshint
  - removed already exposed ports
  
 ### 4.6.1
 
- - PHP 7.0.1
- - :arrow_up: package cache
- - :arrow_up: codeception `^2.1.5`, :arrow_up: package cache
+ - :arrow_up: PHP 7.0.1
+ - :arrow_up: codeception `^2.1.5`
+ - :up: package cache
  - do not ignore errors in deploy script
 
 ### 4.6.0
 
-- [UPD] disabled xdebug loading by default
+- disabled xdebug loading by default
 
 ### 4.6.0-beta1
 
-- [NEW] nginx elk logging
+- :new: nginx elk logging
 
 > :warning: `4.6.0` requires rebuilding of tester classes with `codecept build`
 
