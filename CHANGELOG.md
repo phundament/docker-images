@@ -1,10 +1,11 @@
 Docker images `phundament/php-one`
 ==================================
 
-### latest
+### 4.6.3
 
  - use latest `composer` release via curl from GitHub API
  - hardened build
+ - :new: climb (composer outdated check)
 
 ### 4.6.2
 
