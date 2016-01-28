@@ -63,6 +63,8 @@ Features
    - mcrypt
    - zip
    - apcu
+   - upload_max_filesize 512M
+   - memory_limit 128M
  - composer
  - fxp/composer-asset-plugin
 
