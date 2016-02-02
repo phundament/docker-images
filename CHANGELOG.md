@@ -28,8 +28,9 @@ Docker images `phundament/php-one`
 ### 4.6.0-beta1
 
 - :new: nginx elk logging
+- :arrow_up: codeception `^2.1.4`
 
-> :warning: `4.6.0` requires rebuilding of tester classes with `codecept build`
+> :warning: `4.6.0-beta1` requires rebuilding of tester classes with `codecept build`
 
 ---
 
