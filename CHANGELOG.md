@@ -1,6 +1,10 @@
 Docker images `phundament/php-one`
 ==================================
 
+### 4.7.0-dev
+
+ - removed legacy files
+
 ### 4.6.3
 
  - use latest `composer` release via curl from GitHub API

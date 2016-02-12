@@ -55,7 +55,10 @@ lint-dockerfiles:
   stage: test
   allow_failure: true
   script:
-    - make x-lint
+    - export DOCKERFILE_PATH=phundament/php-one/5.6-7.0
+    - export DOCKERFILE=Dockerfile-5.6-fpm
+	- docker run --rm -v "$(PWD)/$(DOCKERFILE_PATH)/$(DOCKERFILE)":/Dockerfile:ro redcoolbeans/dockerlint
+	- docker run --rm --privileged -v $(PWD)/$(DOCKERFILE_PATH):/root/ projectatomic/dockerfile-lint dockerfile_lint -f $(DOCKERFILE)
 
 deploy:
   stage: deploy
