@@ -4,6 +4,8 @@ Docker images `phundament/php-one`
 ### 4.7.0-dev
 
  - removed legacy files
+ - added GITHUB_API_TOKEN support
+ - :arrow_up: global packages
 
 ### 4.6.3
 
