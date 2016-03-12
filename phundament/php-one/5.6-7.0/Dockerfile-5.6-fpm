@@ -94,5 +94,4 @@ RUN mkdir -p /app/runtime /app/web/assets && \
     chown -R 1000:33 /app/runtime /app/web/assets
 
 # Startup script for FPM
-COPY container-files/run.sh /root/run.sh
 CMD ["/root/run.sh"]
