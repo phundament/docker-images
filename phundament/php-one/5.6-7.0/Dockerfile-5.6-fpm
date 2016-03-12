@@ -29,6 +29,7 @@ RUN curl -sL https://deb.nodesource.com/setup | bash - && \
             nodejs \
         --no-install-recommends && \
         apt-get clean && \
+        npm -g install npm@latest && \
         rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 # Install PHP extensions required for Yii 2.0 Framework
@@ -43,55 +44,40 @@ RUN docker-php-ext-configure bcmath && \
                            bcmath \
                            soap
 
-# Install APC (`printf`, see http://stackoverflow.com/a/8154466/291573)
-RUN printf "\n" | pecl install apcu-4.0.10 xdebug-2.4.0RC2 && \
-    echo extension=apcu.so > /usr/local/etc/php/conf.d/apcu.ini && \
-    echo ";zend_extension=xdebug.so" >> /usr/local/etc/php/conf.d/xdebug.ini && \
-    echo "xdebug.remote_enable=0" >> /usr/local/etc/php/conf.d/xdebug.ini && \
-    echo "xdebug.remote_autostart=0" >> /usr/local/etc/php/conf.d/xdebug.ini && \
-    echo "xdebug.remote_connect_back=1" >> /usr/local/etc/php/conf.d/xdebug.ini && \
-    echo "xdebug.remote_port=9000" >> /usr/local/etc/php/conf.d/xdebug.ini && \
-    echo "xdebug.idekey=PHPStorm" >> /usr/local/etc/php/conf.d/xdebug.ini && \
-    echo "xdebug.extended_info=1" >> /usr/local/etc/php/conf.d/xdebug.ini
+# Install PECL extensions
+# see http://stackoverflow.com/a/8154466/291573) for usage of `printf`
+RUN printf "\n" | pecl install apcu-4.0.10 xdebug-2.4.0RC2
 
 # Install less-compiler
-RUN npm install -g less lesshint
+RUN npm install -g less lesshint google-closure-compiler
 
-# Install closure-compiler
-RUN curl -o /root/compiler.tar.gz http://dl.google.com/closure-compiler/compiler-20150126.tar.gz && \
-    tar -xzf /root/compiler.tar.gz && \
-    rm /root/compiler.tar.gz
+ENV VERSION_COMPOSER=1.0.0-beta1 \
+    VERSION_COMPOSER_ASSET_PLUGIN=^1.1.2 \
+    VERSION_CODECEPTION=^2.1.7 \
+    VERSION_CLIMB=^0.8.1 \
+    VERSION_PHD=^4.2.0
 
+# Add configuration files
+COPY container-files/ /
 
+# Install composer
 # Include composer and application binaries in PATH
 ENV PATH /app:/app/vendor/bin:/root/.composer/vendor/bin:$PATH
 
-# Install composer
-COPY container-files/config.json /root/.composer/config.json
-
 # Add GITHUB_API_TOKEN support for composer
-ADD container-files/composer.sh /usr/local/bin/src/composer.sh
-RUN echo "alias composer='sh /usr/local/bin/src/composer.sh'" >> /root/.bashrc
+RUN echo "alias composer='sh /root/composer.sh'" >> /root/.bashrc && \
+    chmod 700 /root/composer.sh
 
 RUN curl -sS https://getcomposer.org/installer | php -- \
-        --version=1.0.0-beta1 && \
+        --version=${VERSION_COMPOSER} && \
     mv composer.phar /usr/local/bin/composer && \
-    composer global require "fxp/composer-asset-plugin:^1.1.2" && \
-    composer global dumpautoload --optimize # 04.03.2016
+    composer global require "fxp/composer-asset-plugin:${VERSION_COMPOSER_ASSET_PLUGIN}" && \
+    composer global dumpautoload --optimize
 
 # Install packages required for Yii 2.0 Framework codeception testing globally
 RUN composer global require  --prefer-dist \
-        "codeception/codeception:~2.1.5" "codeception/specify:*" "codeception/verify:*" "vinkla/climb:^0.8.1" && \
+        "codeception/codeception:${VERSION_CODECEPTION}" "codeception/specify:*" "codeception/verify:*" "vinkla/climb:${VERSION_CLIMB}" && \
     composer global dumpautoload --optimize
-
-
-# Add PHP-FPM + nginx configuration
-COPY container-files/pool.d/* /usr/local/etc/php/pool.d/
-COPY container-files/php-fpm.conf /usr/local/etc/php-fpm.conf
-
-# PHP configuration
-COPY container-files/conf.d/* /usr/local/etc/php/conf.d/
-
 
 # Setup application environment
 WORKDIR /app
@@ -99,7 +85,7 @@ WORKDIR /app
 # Install application template and core extensions to `phundament-src` directory for caching and installation by copying files.
 RUN rm -rf /phundament-src && \
     composer create-project --prefer-dist \
-        phundament/app:^4.1.0 \
+        phundament/app:${VERSION_PHD} \
         /phundament-src && \
     composer dumpautoload -d /phundament-src --optimize
 
