@@ -1,6 +1,12 @@
 Docker images `phundament/php-one`
 ==================================
 
+### 5.0.0-beta1
+
+ - :warning: updated closure compiler path (npm)
+ - added version env variables
+ - restructured container-files
+ 
 ### 4.7.0
 
  - :arrow_up: PHP **5.6.18**
