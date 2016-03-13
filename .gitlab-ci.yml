@@ -7,7 +7,7 @@ before_script:
   - touch -acmt 1010101011 phundament/php-one/5.6-7.0/container-files/config.json
 
 
-build-php5:
+build-php5-fpm:
   stage: build
   script:
     - cd phundament/php-one/5.6-7.0
@@ -19,7 +19,7 @@ build-php5-apache:
     - cd phundament/php-one/5.6-7.0
     - docker build --pull -t phundament/php-one:5.6-apache -f Dockerfile-5.6-apache .
 
-build-php7:
+build-php7-fpm:
   stage: build
   script:
     - cd phundament/php-one/5.6-7.0
@@ -35,7 +35,7 @@ test-images:
   stage: test
   script:
     - docker run --rm -v $CI_APP_VOLUME/tests:/tests phundament/php-one:5.6-fpm php -e /tests/phundament/php-one/test_functions.php
-    - docker run --rm phundament/php-one:5.6-fpm java -jar /root/node_modules/google-closure-compiler/compiler.jar --version
+    - docker run --rm phundament/php-one:5.6-fpm java -jar /usr/lib/node_modules/google-closure-compiler/compiler.jar --version
 
 test-images-allow-fail:
   stage: test
