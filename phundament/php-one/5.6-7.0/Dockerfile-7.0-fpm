@@ -83,12 +83,11 @@ RUN composer global require  --prefer-dist \
 # Setup application environment
 WORKDIR /app
 
-# Install application template and core extensions to `phundament-src` directory for caching and installation by copying files.
-RUN rm -rf /phundament-src && \
-    composer create-project --prefer-dist \
+# Run `create-project` to prepare composer caches; remove source afterwards
+RUN composer create-project --prefer-dist \
         phundament/app:${VERSION_PHD} \
         /phundament-src && \
-    composer dumpautoload -d /phundament-src --optimize
+    rm -rf /phundament-src
 
 # Prepare folders for Yii 2.0 Framework (www-data)
 RUN mkdir -p /app/runtime /app/web/assets && \
