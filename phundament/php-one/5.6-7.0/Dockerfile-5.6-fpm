@@ -87,9 +87,5 @@ RUN composer create-project --prefer-dist \
         /phundament-src && \
     rm -rf /phundament-src
 
-# Prepare folders for Yii 2.0 Framework (www-data)
-RUN mkdir -p /app/runtime /app/web/assets && \
-    chown -R 1000:33 /app/runtime /app/web/assets
-
 # Startup script for FPM
 CMD ["/root/run.sh"]

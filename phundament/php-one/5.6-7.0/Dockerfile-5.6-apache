@@ -88,9 +88,6 @@ RUN composer create-project --prefer-dist \
     rm -rf /phundament-src
 
 # Prepare folders for Yii 2.0 Framework (www-data)
-RUN mkdir -p /app/runtime /app/web/assets && \
-    chown -R www-data:www-data /app/runtime /app/web/assets
-
 RUN rm -rf /var/www/html
 RUN ln -s /app/web /var/www/html
 
