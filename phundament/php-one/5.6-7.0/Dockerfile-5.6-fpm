@@ -54,7 +54,7 @@ RUN npm install -g less lesshint google-closure-compiler
 # Add configuration files
 COPY container-files/ /
 
-ENV VERSION_COMPOSER=1.0.0-beta1 \
+ENV VERSION_COMPOSER=1.0.0-beta2 \
     VERSION_COMPOSER_ASSET_PLUGIN=^1.1.2 \
     VERSION_CODECEPTION=^2.1.7 \
     VERSION_CLIMB=^0.8.1 \
