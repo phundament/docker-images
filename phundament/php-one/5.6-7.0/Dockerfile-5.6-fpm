@@ -85,6 +85,7 @@ WORKDIR /app
 RUN composer create-project --prefer-dist \
         phundament/app:${VERSION_PHD} \
         /phundament-src && \
+    composer update --dry-run && \
     rm -rf /phundament-src
 
 # Startup script for FPM
