@@ -66,5 +66,6 @@ deploy:
     - sh build/deploy.sh
   only:
     - master
+    - tags
   except:
     - develop
