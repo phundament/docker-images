@@ -85,7 +85,7 @@ WORKDIR /app
 RUN composer create-project --prefer-dist \
         phundament/app:${VERSION_PHD} \
         /phundament-src && \
-    composer update --dry-run && \
+    composer update -d /phundament-src --dry-run && \
     rm -rf /phundament-src
 
 # Prepare folders for Yii 2.0 Framework (www-data)
