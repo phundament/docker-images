@@ -1,6 +1,6 @@
 {
     "config": {
-        "preferred-install": "source",
+        "preferred-install": "dist",
         "github-protocols": ["https","http","git"],
         "github-oauth": {
             "github.com": "0000000000000000000000000000000000000000"
