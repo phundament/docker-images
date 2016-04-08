@@ -14,5 +14,10 @@ if [ ! -n "$SERVER_NAME" ] ; then
 fi
 sed -i "s|\${SERVER_NAME}|${SERVER_NAME}|" /etc/nginx/nginx.conf
 
+if [ ! -n "$FASTCGI_PASS_HOST" ] ; then
+    FASTCGI_PASS_HOST="phpfpm"
+fi
+sed -i "s|\${FASTCGI_PASS_HOST}|${FASTCGI_PASS_HOST}|" /etc/nginx/nginx.conf
+
 # Run nginx
 nginx -g 'daemon off;'
