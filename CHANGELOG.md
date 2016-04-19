@@ -1,11 +1,17 @@
 Docker images `phundament/php-one`
 ==================================
 
-### 5.0.0-beta1
+### 5.0.0
 
- - :warning: updated closure compiler path (npm)
+ - :warning: updated closure compiler path (npm) moved from `/root/compiler.jar` to `/usr/lib/node_modules/google-closure-compiler/compiler.jar`
+ - :arrow_up: PHP **5.6.20**
+ - :arrow_up: PHP **7.0.5**
+ - :arrow_up: composer **1.0.1**
  - added version env variables
  - restructured container-files
+ - set preferred install method for composer to dist
+ - improved composer caching (added prestissimo plugin to composer)
+ - added FASTCGI_PASS_HOST environment variable for PHP-fpm upstream to nginx image
  
 ### 4.7.0
 
