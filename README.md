@@ -22,8 +22,13 @@ Docker Hub
 
 ### Phundament PHP & nginx 
 
-- https://hub.docker.com/r/phundament/php-one/
-- https://hub.docker.com/r/phundament/nginx-one/
+https://hub.docker.com/r/phundament/php-one/
+
+- `5.6-fpm-5.0.1`, `5.6-fpm` (phundament/php-one/5.6-7.0/Dockerfile-5.6-fpm)
+- `5.6-apache-5.0.1`, `5.6-apache` (phundament/php-one/5.6-7.0/Dockerfile-5.6-apache)
+- `7.0-fpm-5.0.1`, `7.0-fpm` (phundament/php-one/5.6-7.0/Dockerfile-7.0-fpm)
+
+https://hub.docker.com/r/phundament/nginx-one/
 
 > *legacy-images* - last release `5.6-[..]-4.5.1`
 >
