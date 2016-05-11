@@ -46,7 +46,7 @@ RUN docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-di
 
 # Install PECL extensions
 # see http://stackoverflow.com/a/8154466/291573) for usage of `printf`
-RUN printf "\n" | pecl install apcu-4.0.10 xdebug-2.4.0RC2
+RUN printf "\n" | pecl install apcu-stable xdebug-2.4.0RC2
 
 # Install less-compiler
 RUN npm install -g less lesshint google-closure-compiler
@@ -54,9 +54,9 @@ RUN npm install -g less lesshint google-closure-compiler
 # Add configuration files
 COPY container-files/ /
 
-ENV VERSION_COMPOSER=1.0.2 \
+ENV VERSION_COMPOSER=1.1.0 \
     VERSION_COMPOSER_ASSET_PLUGIN=^1.1.4 \
-    VERSION_PRESTISSIMO_PLUGIN=^0.1.18 \
+    VERSION_PRESTISSIMO_PLUGIN=^0.2.3 \
     VERSION_CODECEPTION=^2.1.7 \
     VERSION_CLIMB=^0.8.1 \
     VERSION_PHD=^4.2.0 \
