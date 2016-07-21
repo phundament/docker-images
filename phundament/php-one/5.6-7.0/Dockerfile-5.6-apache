@@ -57,7 +57,7 @@ COPY container-files/ /
 ENV VERSION_COMPOSER=1.1.0 \
     VERSION_COMPOSER_ASSET_PLUGIN=^1.2.0 \
     VERSION_PRESTISSIMO_PLUGIN=^0.2.3 \
-    VERSION_CODECEPTION=^2.1.7 \
+    VERSION_CODECEPTION=^2.2.2 \
     VERSION_CLIMB=^0.8.1 \
     VERSION_PHD=^4.2.0 \
     PATH=/app:/app/vendor/bin:/root/.composer/vendor/bin:$PATH \
