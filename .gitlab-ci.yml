@@ -34,7 +34,11 @@ build-nginx:
 test-images:
   stage: test
   script:
+    - docker run --rm -v $CI_APP_VOLUME/tests:/tests phundament/php-one:5.6-fpm php -v || EXIT_CODE=1
+    - docker run --rm -v $CI_APP_VOLUME/tests:/tests phundament/php-one:5.6-apache php -v || EXIT_CODE=1
+    - docker run --rm -v $CI_APP_VOLUME/tests:/tests phundament/php-one:7.0-fpm php -v || EXIT_CODE=1
     - docker run --rm -v $CI_APP_VOLUME/tests:/tests phundament/php-one:5.6-fpm php -e /tests/phundament/php-one/test_functions.php
+    - docker run --rm -v $CI_APP_VOLUME/tests:/tests phundament/php-one:7.0-fpm php -e /tests/phundament/php-one/test_functions.php
     - docker run --rm phundament/php-one:5.6-fpm java -jar /usr/lib/node_modules/google-closure-compiler/compiler.jar --version
 
 test-images-allow-fail:
@@ -43,12 +47,8 @@ test-images-allow-fail:
   script:
     - set -e
     - EXIT_CODE=0
-    - docker run --rm -v $CI_APP_VOLUME/tests:/tests phundament/php-one:5.6-fpm php -v || EXIT_CODE=1
-    - docker run --rm -v $CI_APP_VOLUME/tests:/tests phundament/php-one:5.6-apache php -v || EXIT_CODE=1
-    - docker run --rm -v $CI_APP_VOLUME/tests:/tests phundament/php-one:7.0-fpm php -v || EXIT_CODE=1
     - docker run --rm -v $CI_APP_VOLUME/tests:/tests phundament/php-one:5.6-fpm composer diagnose || EXIT_CODE=1
     - docker run --rm -v $CI_APP_VOLUME/tests:/tests phundament/php-one:5.6-apache php -e /tests/phundament/php-one/test_functions.php || EXIT_CODE=1
-    - docker run --rm -v $CI_APP_VOLUME/tests:/tests phundament/php-one:7.0-fpm php -e /tests/phundament/php-one/test_functions.php || EXIT_CODE=1
     - exit $EXIT_CODE
 
 lint-dockerfiles:
