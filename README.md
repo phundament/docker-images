@@ -1,5 +1,7 @@
-**:bangbang: This image is no longer actively maintained, 
+**:bangbang: The PHP image is no longer actively maintained, 
 it's recommended to upgrade to [`dmstr/php-yii2`](https://github.com/dmstr/docker-php-yii2)**
+
+We will also moved the nginx image to `dmstr/nginx-php`...
 
 ---
 
